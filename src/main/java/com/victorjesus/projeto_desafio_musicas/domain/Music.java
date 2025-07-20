@@ -13,6 +13,12 @@ public class Music {
     @ManyToOne
     private Artist artist;
 
+    public Music(Genre genre, String name, Artist artist) {
+        this.genre = genre;
+        this.name = name;
+        this.artist = artist;
+    }
+
     public Long getId() {
         return id;
     }

@@ -10,10 +10,19 @@ public class Artist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
-    private int idade;
+    private String name;
+    private int age;
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Music> musics;
+
+    public Artist(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public Artist() {
+
+    }
 
     public Long getId() {
         return id;
@@ -23,20 +32,20 @@ public class Artist {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String nome) {
+        this.name = nome;
     }
 
-    public int getIdade() {
-        return idade;
+    public int getAge() {
+        return age;
     }
 
-    public void setIdade(int idade) {
-        this.idade = idade;
+    public void setAge(int idade) {
+        this.age = idade;
     }
 
     public List<Music> getMusics() {
