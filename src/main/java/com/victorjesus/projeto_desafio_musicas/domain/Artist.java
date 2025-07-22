@@ -11,17 +11,24 @@ public class Artist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private int age;
-    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private ArtistType artistType;
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Music> musics;
 
-    public Artist(String name, int age) {
+    public Artist(String name, ArtistType artistType) {
         this.name = name;
-        this.age = age;
     }
 
     public Artist() {
 
+    }
+
+    public ArtistType getArtistType() {
+        return artistType;
+    }
+
+    public void setArtistType(ArtistType artistType) {
+        this.artistType = artistType;
     }
 
     public Long getId() {
@@ -38,14 +45,6 @@ public class Artist {
 
     public void setName(String nome) {
         this.name = nome;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int idade) {
-        this.age = idade;
     }
 
     public List<Music> getMusics() {

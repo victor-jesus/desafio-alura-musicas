@@ -25,25 +25,17 @@ public enum Genre {
         return code;
     }
 
-    public void setCode(int code) {
-        this.code = code;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public static Genre fromCode(int code){
+    public static Genre fromCode(int code) throws IllegalArgumentException{
         for(Genre genre : Genre.values()) {
             if(genre.code == code) {
                 return genre;
             }
         }
-        throw new IllegalArgumentException("Código inválido de Gênero: " + code);
+        throw new IllegalArgumentException("Não existe gênero com esse código: " + code);
     }
 
     public static void listGenres(){

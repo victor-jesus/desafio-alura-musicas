@@ -11,12 +11,16 @@ public class Music {
     private String name;
     private Genre genre;
     @ManyToOne
+    @JoinColumn(name = "artist_id", nullable = false)
     private Artist artist;
 
     public Music(Genre genre, String name, Artist artist) {
         this.genre = genre;
         this.name = name;
         this.artist = artist;
+    }
+
+    public Music() {
     }
 
     public Long getId() {
