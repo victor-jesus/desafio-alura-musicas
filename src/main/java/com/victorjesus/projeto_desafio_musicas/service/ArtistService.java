@@ -1,23 +1,36 @@
 package com.victorjesus.projeto_desafio_musicas.service;
 
 import com.victorjesus.projeto_desafio_musicas.domain.Artist;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.victorjesus.projeto_desafio_musicas.repository.ArtistRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ArtistService extends BaseService<Artist, Long> {
-    public ArtistService(JpaRepository<Artist, Long> repository) {
-        super(repository);
+    private final ArtistRepository artistRepository;
+
+    public ArtistService(ArtistRepository artistRepository) {
+        super(artistRepository);
+        this.artistRepository = artistRepository;
     }
 
     @Override
     public void deleteItens(List<Long> ids) {
-        for(long id : ids){
-            Artist artist = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Não foi possível encontrar o artista do ID: " + id));
+        for (Long id : ids) {
+            Optional<Artist> optionalArtist = artistRepository.findById(id);
 
-            artist.getMusics().clear();
+            if (optionalArtist.isPresent()) {
+                Artist artist = optionalArtist.get();
 
-            repository.delete(artist);
+                if (artist.getMusics() != null) {
+                    artist.getMusics().clear();
+                }
+
+                artistRepository.delete(artist);
+
+            } else {
+                System.err.println("Não existe artista com Id " + id + " no banco.");
+            }
         }
     }
 }

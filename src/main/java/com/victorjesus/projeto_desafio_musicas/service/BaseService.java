@@ -2,13 +2,14 @@ package com.victorjesus.projeto_desafio_musicas.service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseService<T, ID> implements CrudService<T, ID> {
     protected JpaRepository<T, ID> repository;
 
-    public BaseService(JpaRepository<T, ID> repository){
+    public BaseService(JpaRepository<T, ID> repository) {
         this.repository = repository;
     }
 
@@ -23,17 +24,13 @@ public abstract class BaseService<T, ID> implements CrudService<T, ID> {
     }
 
     @Override
-    public void save(T item) {
-        repository.save(item);
-    }
-
-    @Override
-    public void deleteItens(List<ID> id) {
-        repository.deleteAllByIdInBatch(id);
+    public T save(T item) {
+        return repository.save(item);
     }
 
     @Override
     public void deleteAll() {
         repository.deleteAll();
+        System.out.println(" - Itens deletadas com sucesso - ");
     }
 }

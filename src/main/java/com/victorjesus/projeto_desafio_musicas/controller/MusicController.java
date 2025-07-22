@@ -22,6 +22,11 @@ public class MusicController {
         return musicService.listAll();
     }
 
+    public Optional<Music> getByName(String name) {
+        System.out.println("--- Listando ---");
+        return musicService.findMusicByName(name);
+    }
+
     public void createMusic(Genre genre, String name, long artistId) throws IllegalArgumentException {
         System.out.println("--- Criando Musica ---");
 
@@ -32,11 +37,12 @@ public class MusicController {
         Music music = new Music(genre, name, artist);
 
         musicService.save(music);
-        System.out.println("--- Musica " + music.getName() + " salvo com sucesso ---");
+        System.out.println("--- Musica " + music.getName() + " salva com sucesso ---");
     }
 
     public void deleteMusicsById(List<Long> ids){
         musicService.deleteItens(ids);
+        System.out.println("Músicas deletadas com sucesso.");
     }
 
     public Optional<Music> getById(long id){

@@ -6,7 +6,8 @@ import java.util.Optional;
 public interface CrudService<T, ID> {
     Optional<T> getById(ID id);
     List<T> listAll();
-    void save(T item);
+    T save(T item);
     void deleteAll();
     void deleteItens(List<ID> ids);
+
 }
