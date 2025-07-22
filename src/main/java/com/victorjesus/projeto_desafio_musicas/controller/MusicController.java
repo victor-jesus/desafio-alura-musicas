@@ -1,29 +1,46 @@
 package com.victorjesus.projeto_desafio_musicas.controller;
 
 import com.victorjesus.projeto_desafio_musicas.domain.Artist;
+import com.victorjesus.projeto_desafio_musicas.domain.Genre;
+import com.victorjesus.projeto_desafio_musicas.domain.Music;
 import com.victorjesus.projeto_desafio_musicas.repository.ArtistRepository;
-import com.victorjesus.projeto_desafio_musicas.service.ArtistService;
+import com.victorjesus.projeto_desafio_musicas.repository.MusicRepository;
+import com.victorjesus.projeto_desafio_musicas.service.MusicService;
 
 import java.util.List;
+import java.util.Optional;
 
-public class ArtistController {
-    private final ArtistService artistService;
+public class MusicController {
+    private final MusicService musicService;
 
-    public ArtistController(ArtistRepository artistRepository){
-        this.artistService = new ArtistService(artistRepository);
+    public MusicController(MusicRepository musicRepository, ArtistRepository artistRepository){
+        this.musicService = new MusicService(musicRepository, artistRepository);
     }
 
-    public void listAll() {
-        System.out.println("--- Listando Artistas ---");
-        var artists = artistService.listAll();
-
-        artists.forEach(a -> System.out.println(a.getId() + " - " + a.getName()));
+    public List<Music> listAll() {
+        System.out.println("--- Listando Músicas ---");
+        return musicService.listAll();
     }
 
-    public void createArtist(String name, int age) {
-        System.out.println("--- Criando Artista ---");
-        Artist artist = new Artist(name, age);
-        artistService.save(artist);
-        System.out.println("--- Artist " + artist.getName() + " salvo com sucesso ---");
+    public void createMusic(Genre genre, String name, long artistId) throws IllegalArgumentException {
+        System.out.println("--- Criando Musica ---");
+
+        Artist artist = new Artist();
+
+        artist.setId(artistId);
+
+        Music music = new Music(genre, name, artist);
+
+        musicService.save(music);
+        System.out.println("--- Musica " + music.getName() + " salvo com sucesso ---");
     }
+
+    public void deleteMusicsById(List<Long> ids){
+        musicService.deleteItens(ids);
+    }
+
+    public Optional<Music> getById(long id){
+        return musicService.getById(id);
+    }
+
 }

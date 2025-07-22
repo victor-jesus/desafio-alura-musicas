@@ -28,8 +28,8 @@ public abstract class BaseService<T, ID> implements CrudService<T, ID> {
     }
 
     @Override
-    public void deleteById(ID id) {
-        repository.deleteById(id);
+    public void deleteItens(List<ID> id) {
+        repository.deleteAllByIdInBatch(id);
     }
 
     @Override

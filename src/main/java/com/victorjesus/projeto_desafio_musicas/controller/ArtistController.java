@@ -1,10 +1,12 @@
 package com.victorjesus.projeto_desafio_musicas.controller;
 
 import com.victorjesus.projeto_desafio_musicas.domain.Artist;
+import com.victorjesus.projeto_desafio_musicas.domain.ArtistType;
 import com.victorjesus.projeto_desafio_musicas.repository.ArtistRepository;
 import com.victorjesus.projeto_desafio_musicas.service.ArtistService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ArtistController {
     private final ArtistService artistService;
@@ -13,17 +15,25 @@ public class ArtistController {
         this.artistService = new ArtistService(artistRepository);
     }
 
-    public void listAll() {
+    public List<Artist> listAll() {
         System.out.println("--- Listando Artistas ---");
-        var artists = artistService.listAll();
-
-        artists.forEach(a -> System.out.println(a.getId() + " - " + a.getName()));
+        return artistService.listAll();
     }
 
-    public void createArtist(String name, int age) {
+    public Optional<Artist> getById(Long id) {
+        return artistService.getById(id);
+    }
+
+    public void createArtist(String name, ArtistType artistType) {
         System.out.println("--- Criando Artista ---");
-        Artist artist = new Artist(name, age);
+
+        Artist artist = new Artist(name, artistType);
+
         artistService.save(artist);
         System.out.println("--- Artist " + artist.getName() + " salvo com sucesso ---");
+    }
+
+    public void deleteArtistById(List<Long> ids){
+        artistService.deleteItens(ids);
     }
 }
